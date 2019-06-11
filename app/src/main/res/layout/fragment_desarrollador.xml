@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="co.quindio.sena.tutorialwebservice.fragments.DesarrolladorFragment">
+    tools:context=".MainActivity">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="DESARROLLADOR"
+        android:text="Android Development"
         android:gravity="center"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
@@ -25,9 +25,9 @@
         <ImageView
             android:layout_width="133dp"
             android:layout_height="156dp"
-            android:src="@drawable/cristian"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/flaquita_y_yo" />
 
 
 
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Cristian David Henao\nCreador del Blog\ncodejavu.blogspot.com\nhttp://www.facebook.com/codejavu\nTwitter: @chenaooo"
+            android:text="Johnny III Young Ospino\nEn búsqueda de información\nAutodidacta y fánatico de la tecnología\nTwitter: @johnny3young\nMedellin, Colombia"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -44,7 +44,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/yo"
         android:layout_gravity="center"
         android:layout_marginRight="10dp"/>
 

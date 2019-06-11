@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.adapter;
+package com.ejemplo.app.webservice_db_mysql_json_php.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,14 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.Usuario;
+
 import java.util.List;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.entidades.Usuario;
-
-/**
- * Created by CHENAO on 6/08/2017.
- */
 
 public class UsuariosAdapter extends RecyclerView.Adapter<UsuariosAdapter.UsuariosHolder>{
 

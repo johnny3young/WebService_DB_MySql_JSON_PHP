@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.entidades;
+package com.ejemplo.app.webservice_db_mysql_json_php.entidades;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,14 +38,14 @@ public class Usuario {
         this.dato = dato;
 
         try {
-            byte[] byteCode= Base64.decode(dato,Base64.DEFAULT);
+            byte[] byteCode= Base64.decode(dato, Base64.DEFAULT);
             //this.imagen= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
 
             int alto=100;//alto en pixeles
             int ancho=150;//ancho en pixeles
 
-            Bitmap foto=BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
-            this.imagen=Bitmap.createScaledBitmap(foto,alto,ancho,true);
+            Bitmap foto= BitmapFactory.decodeByteArray(byteCode,0,byteCode.length);
+            this.imagen= Bitmap.createScaledBitmap(foto,alto,ancho,true);
 
 
         }catch (Exception e){

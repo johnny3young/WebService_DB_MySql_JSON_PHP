@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -16,20 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.Usuario;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.entidades.Usuario;
-import co.quindio.sena.tutorialwebservice.entidades.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -96,11 +92,11 @@ public class ConsultarUsuarioFragment extends Fragment implements Response.Liste
                              Bundle savedInstanceState) {
         View vista=inflater.inflate(R.layout.fragment_consultar_usuario, container, false);
 
-        campoDocumento= (EditText) vista.findViewById(R.id.campoDocumento);
-        txtNombre= (TextView) vista.findViewById(R.id.txtNombre);
-        txtProfesion= (TextView) vista.findViewById(R.id.txtProfesion);
-        btnConsultarUsuario= (Button) vista.findViewById(R.id.btnConsultarUsuario);
-        campoImagen=(ImageView) vista.findViewById(R.id.imagenId);
+        campoDocumento=  vista.findViewById(R.id.campoDocumento);
+        txtNombre=  vista.findViewById(R.id.txtNombre);
+        txtProfesion=  vista.findViewById(R.id.txtProfesion);
+        btnConsultarUsuario=  vista.findViewById(R.id.btnConsultarUsuario);
+        campoImagen= vista.findViewById(R.id.imagenId);
 
        // request= Volley.newRequestQueue(getContext());
 
@@ -123,7 +119,7 @@ public class ConsultarUsuarioFragment extends Fragment implements Response.Liste
 
         String ip=getString(R.string.ip);
 
-        String url=ip+"/ejemploBDRemota/wsJSONConsultarUsuarioImagen.php?documento="
+        String url=ip+"/ejemploBDRemota/webservices_consultar_usuario.php?documento="
                 +campoDocumento.getText().toString();
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
@@ -135,7 +131,7 @@ public class ConsultarUsuarioFragment extends Fragment implements Response.Liste
     @Override
     public void onErrorResponse(VolleyError error) {
         progreso.hide();
-        Toast.makeText(getContext(),"No se pudo Consultar "+error.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),"No se pudo Consultar "+error.toString(), Toast.LENGTH_SHORT).show();
         Log.i("ERROR",error.toString());
     }
 

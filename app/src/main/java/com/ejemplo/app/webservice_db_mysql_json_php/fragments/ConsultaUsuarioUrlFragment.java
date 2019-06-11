@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -28,18 +28,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.Usuario;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,10 +50,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.entidades.Usuario;
-import co.quindio.sena.tutorialwebservice.entidades.VolleySingleton;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -204,7 +200,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
 
         final String ip=getString(R.string.ip);
 
-        String url=ip+"/ejemploBDRemota/wsJSONConsultarUsuarioUrl.php?documento="+txtDocumento.getText().toString();
+        String url=ip+"/ejemploBDRemota/webservices_JSON_consultar_usuario_url.php?documento="+txtDocumento.getText().toString();
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -258,7 +254,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
         }, 0, 0, ImageView.ScaleType.CENTER, null, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"Error al cargar la imagen",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Error al cargar la imagen", Toast.LENGTH_SHORT).show();
                 Log.i("ERROR IMAGEN","Response -> "+error);
             }
         });
@@ -289,9 +285,9 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
                    // etiNombre.setText("");
                   //  txtDocumento.setText("");
                  //   etiProfesion.setText("");
-                    Toast.makeText(getContext(),"Se ha Actualizado con exito",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Se ha Actualizado con exito", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getContext(),"No se ha Actualizado ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"No se ha Actualizado ", Toast.LENGTH_SHORT).show();
                     Log.i("RESPUESTA: ",""+response);
                 }
 
@@ -299,7 +295,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"No se ha podido conectar",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"No se ha podido conectar", Toast.LENGTH_SHORT).show();
                 pDialog.hide();
             }
         }){
@@ -311,7 +307,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
 
                 String imagen=convertirImgString(bitmap);
 
-                Map<String,String> parametros=new HashMap<>();
+                Map<String, String> parametros=new HashMap<>();
                 parametros.put("documento",documento);
                 parametros.put("nombre",nombre);
                 parametros.put("profesion",profesion);
@@ -329,7 +325,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
         byte[] imagenByte=array.toByteArray();
-        String imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
+        String imagenString= Base64.encodeToString(imagenByte, Base64.DEFAULT);
 
         return imagenString;
     }
@@ -353,13 +349,13 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
                     txtDocumento.setText("");
                     etiProfesion.setText("");
                     campoImagen.setImageResource(R.drawable.img_base);
-                    Toast.makeText(getContext(),"Se ha Eliminado con exito",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Se ha Eliminado con exito", Toast.LENGTH_SHORT).show();
                 }else{
                     if (response.trim().equalsIgnoreCase("noExiste")){
-                        Toast.makeText(getContext(),"No se encuentra la persona ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"No se encuentra la persona ", Toast.LENGTH_SHORT).show();
                         Log.i("RESPUESTA: ",""+response);
                     }else{
-                        Toast.makeText(getContext(),"No se ha Eliminado ",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"No se ha Eliminado ", Toast.LENGTH_SHORT).show();
                         Log.i("RESPUESTA: ",""+response);
                     }
 
@@ -369,7 +365,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"No se ha podido conectar",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"No se ha podido conectar", Toast.LENGTH_SHORT).show();
                 pDialog.hide();
             }
         });
@@ -413,16 +409,16 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
             Long consecutivo= System.currentTimeMillis()/1000;
             String nombre=consecutivo.toString()+".jpg";
 
-            path=Environment.getExternalStorageDirectory()+File.separator+DIRECTORIO_IMAGEN
-                    +File.separator+nombre;//indicamos la ruta de almacenamiento
+            path= Environment.getExternalStorageDirectory()+ File.separator+DIRECTORIO_IMAGEN
+                    + File.separator+nombre;//indicamos la ruta de almacenamiento
 
             fileImagen=new File(path);
 
             Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(fileImagen));
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(fileImagen));
 
             ////
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N)
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.N)
             {
                 String authorities=getContext().getPackageName()+".provider";
                 Uri imageUri= FileProvider.getUriForFile(getContext(),authorities,fileImagen);
@@ -449,7 +445,7 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
                 campoImagen.setImageURI(miPath);
 
                 try {
-                    bitmap=MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
+                    bitmap= MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
                     campoImagen.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -495,12 +491,12 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
 
     //PERMISOS
     private boolean solicitaPermisosVersionesSuperiores() {
-        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.M){//validamos si estamos en android menor a 6 para no buscar los permisos
+        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M){//validamos si estamos en android menor a 6 para no buscar los permisos
             return true;
         }
 
         //validamos si los permisos ya fueron aceptados
-        if((getContext().checkSelfPermission(WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)&&getContext().checkSelfPermission(CAMERA)==PackageManager.PERMISSION_GRANTED){
+        if((getContext().checkSelfPermission(WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)&&getContext().checkSelfPermission(CAMERA)== PackageManager.PERMISSION_GRANTED){
             return true;
         }
 
@@ -518,8 +514,8 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode==MIS_PERMISOS){
-            if(grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){//el dos representa los 2 permisos
-                Toast.makeText(getContext(),"Permisos aceptados",Toast.LENGTH_SHORT);
+            if(grantResults.length==2 && grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]== PackageManager.PERMISSION_GRANTED){//el dos representa los 2 permisos
+                Toast.makeText(getContext(),"Permisos aceptados", Toast.LENGTH_SHORT);
                 campoImagen.setEnabled(true);//se vincula el evento a la imagen
             }
         }else{
@@ -538,11 +534,11 @@ public class ConsultaUsuarioUrlFragment extends Fragment {
                 if (opciones[i].equals("si")){
                     Intent intent=new Intent();
                     intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri=Uri.fromParts("package",getContext().getPackageName(),null);
+                    Uri uri= Uri.fromParts("package",getContext().getPackageName(),null);
                     intent.setData(uri);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getContext(),"Los permisos no fueron aceptados",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Los permisos no fueron aceptados", Toast.LENGTH_SHORT).show();
                     dialogInterface.dismiss();
                 }
             }

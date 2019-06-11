@@ -1,6 +1,5 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,7 +16,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -35,12 +33,12 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.VolleySingleton;
 
 import org.json.JSONObject;
 
@@ -49,9 +47,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.entidades.VolleySingleton;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -64,7 +59,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
  * Use the {@link RegistrarUsuarioFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegistrarUsuarioFragment extends Fragment {
+
+//se agrega implements Response.Listener<JSONObject>, Response.ErrorListener ua que son las interfaces necesarias para trabajar con Volley
+public class RegistrarUsuarioFragment extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -94,6 +91,8 @@ public class RegistrarUsuarioFragment extends Fragment {
     ProgressDialog progreso;
 
     RelativeLayout layoutRegistrar;//permisos
+
+    //Nos permite establecer la conexión con nuestro WebService
 
    // RequestQueue request;
     JsonObjectRequest jsonObjectRequest;
@@ -136,16 +135,18 @@ public class RegistrarUsuarioFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View vista=inflater.inflate(R.layout.fragment_registrar_usuario, container, false);
-        campoDocumento= (EditText) vista.findViewById(R.id.campoDoc);
-        campoNombre= (EditText) vista.findViewById(R.id.campoNombre);
-        campoProfesion= (EditText) vista.findViewById(R.id.campoProfesion);
-        botonRegistro= (Button) vista.findViewById(R.id.btnRegistrar);
-        btnFoto=(Button)vista.findViewById(R.id.btnFoto);
+        campoDocumento=  vista.findViewById(R.id.campoDoc);
+        campoNombre= vista.findViewById(R.id.campoNombre);
+        campoProfesion=  vista.findViewById(R.id.campoProfesion);
+        botonRegistro=  vista.findViewById(R.id.btnRegistrar);
+        btnFoto= vista.findViewById(R.id.btnFoto);
 
-        imgFoto=(ImageView)vista.findViewById(R.id.imgFoto);
+        imgFoto= vista.findViewById(R.id.imgFoto);
 
 
-        layoutRegistrar= (RelativeLayout) vista.findViewById(R.id.idLayoutRegistrar);
+        layoutRegistrar=  vista.findViewById(R.id.idLayoutRegistrar);
+
+
 
        // request= Volley.newRequestQueue(getContext());
 
@@ -210,16 +211,16 @@ public class RegistrarUsuarioFragment extends Fragment {
             Long consecutivo= System.currentTimeMillis()/1000;
             String nombre=consecutivo.toString()+".jpg";
 
-            path=Environment.getExternalStorageDirectory()+File.separator+DIRECTORIO_IMAGEN
-                        +File.separator+nombre;//indicamos la ruta de almacenamiento
+            path= Environment.getExternalStorageDirectory()+ File.separator+DIRECTORIO_IMAGEN
+                        + File.separator+nombre;//indicamos la ruta de almacenamiento
 
             fileImagen=new File(path);
 
             Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(fileImagen));
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(fileImagen));
 
             ////
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N)
+            if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.N)
             {
                 String authorities=getContext().getPackageName()+".provider";
                 Uri imageUri= FileProvider.getUriForFile(getContext(),authorities,fileImagen);
@@ -247,7 +248,7 @@ public class RegistrarUsuarioFragment extends Fragment {
                 imgFoto.setImageURI(miPath);
 
                 try {
-                    bitmap=MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
+                    bitmap= MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
                     imgFoto.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -297,12 +298,12 @@ public class RegistrarUsuarioFragment extends Fragment {
     ////////////////
 
     private boolean solicitaPermisosVersionesSuperiores() {
-        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.M){//validamos si estamos en android menor a 6 para no buscar los permisos
+        if (Build.VERSION.SDK_INT< Build.VERSION_CODES.M){//validamos si estamos en android menor a 6.0 (Marshmallow) para no buscar los permisos
             return true;
         }
 
         //validamos si los permisos ya fueron aceptados
-        if((getContext().checkSelfPermission(WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)&&getContext().checkSelfPermission(CAMERA)==PackageManager.PERMISSION_GRANTED){
+        if((getContext().checkSelfPermission(WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED)&&getContext().checkSelfPermission(CAMERA)== PackageManager.PERMISSION_GRANTED){
             return true;
         }
 
@@ -320,8 +321,8 @@ public class RegistrarUsuarioFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode==MIS_PERMISOS){
-            if(grantResults.length==2 && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){//el dos representa los 2 permisos
-                Toast.makeText(getContext(),"Permisos aceptados",Toast.LENGTH_SHORT);
+            if(grantResults.length==2 && grantResults[0]== PackageManager.PERMISSION_GRANTED && grantResults[1]== PackageManager.PERMISSION_GRANTED){//el dos representa los 2 permisos
+                Toast.makeText(getContext(),"Permisos aceptados", Toast.LENGTH_SHORT);
                 btnFoto.setEnabled(true);
             }
         }else{
@@ -340,11 +341,11 @@ public class RegistrarUsuarioFragment extends Fragment {
                 if (opciones[i].equals("si")){
                     Intent intent=new Intent();
                     intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri=Uri.fromParts("package",getContext().getPackageName(),null);
+                    Uri uri= Uri.fromParts("package",getContext().getPackageName(),null);
                     intent.setData(uri);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getContext(),"Los permisos no fueron aceptados",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Los permisos no fueron aceptados", Toast.LENGTH_SHORT).show();
                     dialogInterface.dismiss();
                 }
             }
@@ -367,8 +368,6 @@ public class RegistrarUsuarioFragment extends Fragment {
         dialogo.show();
     }
 
-    ///////////////
-
 
 
 
@@ -380,7 +379,7 @@ public class RegistrarUsuarioFragment extends Fragment {
 
         String ip=getString(R.string.ip);
 
-        String url=ip+"/ejemploBDRemota/wsJSONRegistroMovil.php?";
+        String url=ip+"/ejemploBDRemota/webservices_registro_usuario.php?";
 
         stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
@@ -392,9 +391,9 @@ public class RegistrarUsuarioFragment extends Fragment {
                     campoNombre.setText("");
                     campoDocumento.setText("");
                     campoProfesion.setText("");
-                    Toast.makeText(getContext(),"Se ha registrado con exito",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Se ha registrado con exito", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getContext(),"No se ha registrado ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"No se ha registrado ", Toast.LENGTH_SHORT).show();
                     Log.i("RESPUESTA: ",""+response);
                 }
 
@@ -402,7 +401,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"No se ha podido conectar",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"No se ha podido conectar", Toast.LENGTH_SHORT).show();
                 progreso.hide();
             }
         }){
@@ -414,7 +413,7 @@ public class RegistrarUsuarioFragment extends Fragment {
 
                 String imagen=convertirImgString(bitmap);
 
-                Map<String,String> parametros=new HashMap<>();
+                Map<String, String> parametros=new HashMap<>();
                 parametros.put("documento",documento);
                 parametros.put("nombre",nombre);
                 parametros.put("profesion",profesion);
@@ -424,6 +423,7 @@ public class RegistrarUsuarioFragment extends Fragment {
             }
         };
         //request.add(stringRequest);
+        //Modificamos el tiempo de respuesta para que no saque error si demora un poco mas de lo normal de forma remota
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(stringRequest);
     }
@@ -433,7 +433,7 @@ public class RegistrarUsuarioFragment extends Fragment {
         ByteArrayOutputStream array=new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
         byte[] imagenByte=array.toByteArray();
-        String imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
+        String imagenString= Base64.encodeToString(imagenByte, Base64.DEFAULT);
 
         return imagenString;
     }
@@ -463,6 +463,15 @@ public class RegistrarUsuarioFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+    }
 
 
     /**

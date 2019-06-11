@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import co.quindio.sena.tutorialwebservice.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
 
 /**
  * A simple {@link Fragment} subclass.

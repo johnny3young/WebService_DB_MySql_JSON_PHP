@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,23 +14,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.adapter.UsuariosImagenUrlAdapter;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.Usuario;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.adapter.UsuariosImagenAdapter;
-import co.quindio.sena.tutorialwebservice.adapter.UsuariosImagenUrlAdapter;
-import co.quindio.sena.tutorialwebservice.entidades.Usuario;
-import co.quindio.sena.tutorialwebservice.entidades.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,7 +94,7 @@ public class ConsultaListaUsuarioImagenUrlFragment extends Fragment implements R
 
         listaUsuarios=new ArrayList<>();
 
-        recyclerUsuarios = (RecyclerView) vista.findViewById(R.id.idRecyclerImagen);
+        recyclerUsuarios = vista.findViewById(R.id.idRecyclerImagen);
         recyclerUsuarios.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerUsuarios.setHasFixedSize(true);
 
@@ -117,7 +113,7 @@ public class ConsultaListaUsuarioImagenUrlFragment extends Fragment implements R
 
         String ip=getString(R.string.ip);
 
-        String url=ip+"/ejemploBDRemota/wsJSONConsultarListaImagenesUrl.php";
+        String url=ip+"/ejemploBDRemota/webservices_JSON_consultar_lista_imagenes_url.php";
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
        // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(getContext()).addToRequestQueue(jsonObjectRequest);

@@ -1,14 +1,10 @@
-package co.quindio.sena.tutorialwebservice.entidades;
+package com.ejemplo.app.webservice_db_mysql_json_php.entidades;
 
 import android.content.Context;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-
-/**
- * Created by CHENAO on 19/11/2017.
- */
 
 public class VolleySingleton {
 

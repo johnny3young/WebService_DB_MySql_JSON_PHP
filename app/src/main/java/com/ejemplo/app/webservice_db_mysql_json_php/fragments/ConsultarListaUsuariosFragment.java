@@ -1,4 +1,4 @@
-package co.quindio.sena.tutorialwebservice.fragments;
+package com.ejemplo.app.webservice_db_mysql_json_php.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,22 +14,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.ejemplo.app.webservice_db_mysql_json_php.R;
+import com.ejemplo.app.webservice_db_mysql_json_php.adapter.UsuariosAdapter;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.Usuario;
+import com.ejemplo.app.webservice_db_mysql_json_php.entidades.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import co.quindio.sena.tutorialwebservice.R;
-import co.quindio.sena.tutorialwebservice.adapter.UsuariosAdapter;
-import co.quindio.sena.tutorialwebservice.entidades.Usuario;
-import co.quindio.sena.tutorialwebservice.entidades.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -118,7 +115,7 @@ public class ConsultarListaUsuariosFragment extends Fragment implements Response
 
         String ip=getString(R.string.ip);
 
-        String url=ip+"/ejemploBDRemota/wsJSONConsultarLista.php";
+        String url=ip+"/ejemploBDRemota/webservices_consultar_lista_usuario.php";
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET,url,null,this,this);
        // request.add(jsonObjectRequest);
